@@ -1,5 +1,4 @@
 import {test, expect} from '@playwright/test';
-import {SwagInventory} from "../page-objects/SwagInventory";
 
 const {swagLabsLoginPage} = require("../page-objects/SwagLabsLoginPage");
 const {inventoryPage} = require("../page-objects/SwagInventory")
@@ -42,6 +41,10 @@ test(`adding to cart`, async ({page}) => {
     const loginPage = new swagLabsLoginPage(page)
     const inventory = new inventoryPage(page)
     await loginPage.fullLogin("standard_user", "secret_sauce")
-    await inventory.addFirstProductToCart()
-    await inventory.isRemoveButtonAppeared()
+    let buttons = await inventory.getAllAddToCartButtonElements()
+    for (let button of buttons) {
+        await button.click
+        expect(await inventory.isRemoveButtonAppeared())
+        await button.click
+    }
 })

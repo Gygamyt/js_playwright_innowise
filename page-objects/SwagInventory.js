@@ -7,7 +7,7 @@ exports.inventoryPage = class SwagInventory {
         this.allProductsOnPageLocator = page.locator("//div[contains(@class, 'inventory_item_name')]")
         this.allProductsOnPageXPath = "//div[contains(@class, 'inventory_item_name')]"
         // this.productNameXPath = `//div[text()='${productName}']`
-        this.addToCartLocator = page.locator("//button[text()='Add to cart']").first()
+        this.addToCartXPath = "//button[text()='Add to cart']"
         this.removeButtonLocator = page.locator("//button[text()='Remove']")
     }
 
@@ -15,10 +15,13 @@ exports.inventoryPage = class SwagInventory {
         return await this.page.$$(this.allProductsOnPageXPath)
     }
 
-    async addFirstProductToCart() {
-        await this.addToCartLocator.click()
+    async getAllAddToCartButtonElements() {
+       return await this.page.$$(this.addToCartXPath)
     }
 
+    async clickRemoveButton() {
+        await this.removeButtonLocator.click()
+    }
     async isRemoveButtonAppeared() {
         return await this.removeButtonLocator.isVisible()
     }
