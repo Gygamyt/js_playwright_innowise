@@ -8,7 +8,7 @@ exports.swagLabsLoginPage = class swagLabsLoginPage {
         this.usernameInputField = page.getByPlaceholder("Username");
         this.passwordInputField = page.getByPlaceholder("Password");
         this.loginButton = page.locator('[data-test="login-button"]');
-        this.blockedUserElement = page.locator("//div[contains(@class, 'error')]")
+        this.errorLoginElement = page.locator("//div[contains(@class, 'error')]")
     }
 
     async inputLogin(login) {
@@ -16,8 +16,8 @@ exports.swagLabsLoginPage = class swagLabsLoginPage {
         await this.usernameInputField.fill(login)
     }
 
-    async isBlockedUserElementVisible() {
-        let isVisible = await this.blockedUserElement.isVisible()
+    async isLoginErrorElementVisible() {
+        let isVisible = await this.errorLoginElement.isVisible()
         return isVisible === true;
     }
 

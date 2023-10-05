@@ -2,9 +2,10 @@ import {test, expect} from '@playwright/test';
 
 const {swagLabsLoginPage} = require("../page-objects/SwagLabsLoginPage");
 const {inventoryPage} = require("../page-objects/SwagInventory")
+const baseUrl = "https://www.saucedemo.com/"
 
 test.beforeEach(async ({page}) => {
-    await page.goto("https://www.saucedemo.com/")
+    await page.goto(baseUrl)
 })
 
 const logins = ["standard_user", "locked_out_user"]
@@ -19,7 +20,7 @@ for (const login of logins) {
                 expect(page.url()).toBe("https://www.saucedemo.com/inventory.html")
                 break
             case "locked_out_user":
-                expect(await loginPage.isBlockedUserElementVisible()).toBe(true)
+                expect(await loginPage.isLoginErrorElementVisible()).toBe(true)
                 break
         }
 
@@ -41,10 +42,5 @@ test(`adding to cart`, async ({page}) => {
     const loginPage = new swagLabsLoginPage(page)
     const inventory = new inventoryPage(page)
     await loginPage.fullLogin("standard_user", "secret_sauce")
-    let buttons = await inventory.getAllAddToCartButtonElements()
-    for (let button of buttons) {
-        await button.click
-        expect(await inventory.isRemoveButtonAppeared())
-        await button.click
-    }
+    await inventory.clickAllAddToCartButtonElements()
 })

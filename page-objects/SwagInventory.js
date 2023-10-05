@@ -1,3 +1,4 @@
+const {expect} = require("@playwright/test");
 exports.inventoryPage = class SwagInventory {
     /**
      * @param {import('@playwright/test').Page} page
@@ -15,13 +16,22 @@ exports.inventoryPage = class SwagInventory {
         return await this.page.$$(this.allProductsOnPageXPath)
     }
 
-    async getAllAddToCartButtonElements() {
-       return await this.page.$$(this.addToCartXPath)
+    async clickAllAddToCartButtonElements() {
+        let booleanForReturn = true
+        let addButtons = await this.page.$$(this.addToCartXPath)
+        for (let element in addButtons) {
+            await addButtons[element].click()
+            if (!await this.removeButtonLocator.nth(element).isVisible()) {
+                return booleanForReturn = false
+            }
+        }
+        return booleanForReturn
     }
 
     async clickRemoveButton() {
         await this.removeButtonLocator.click()
     }
+
     async isRemoveButtonAppeared() {
         return await this.removeButtonLocator.isVisible()
     }
