@@ -25,7 +25,7 @@ exports.inventoryPage = class SwagInventory {
                 return booleanForReturn = false
             }
         }
-        return booleanForReturn
+        return booleanForReturn;
     }
 
     async clickRemoveButton() {

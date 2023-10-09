@@ -1,4 +1,5 @@
 import {test, expect} from '@playwright/test';
+import * as util from "util";
 
 const {swagLabsLoginPage} = require("../page-objects/SwagLabsLoginPage");
 const {inventoryPage} = require("../page-objects/SwagInventory")
@@ -42,5 +43,7 @@ test(`adding to cart`, async ({page}) => {
     const loginPage = new swagLabsLoginPage(page)
     const inventory = new inventoryPage(page)
     await loginPage.fullLogin("standard_user", "secret_sauce")
-    await inventory.clickAllAddToCartButtonElements()
+    expect(page.url()).toBe("https://www.saucedemo.com/inventory.html")
+    let utilBoolean = await inventory.clickAllAddToCartButtonElements() //pochemu pri vizove vnytri expecta daet NE TO
+    expect(await utilBoolean).toBe(true)
 })
