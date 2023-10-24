@@ -14,6 +14,7 @@ exports.swagLabsLoginPage = class swagLabsLoginPage {
     async inputLogin(login) {
         await this.usernameInputField.click()
         await this.usernameInputField.fill(login)
+        return this
     }
 
     async isLoginErrorElementVisible() {
@@ -24,15 +25,18 @@ exports.swagLabsLoginPage = class swagLabsLoginPage {
     async inputPassword(password) {
         await this.passwordInputField.click()
         await this.passwordInputField.fill(password)
+        return this
     }
 
     async clickLoginButton() {
         await this.loginButton.click()
+        return this
     }
 
     async fullLogin(login, password) {
         await this.inputLogin(login)
         await this.inputPassword(password)
         await this.clickLoginButton()
+        return this
     }
 }
